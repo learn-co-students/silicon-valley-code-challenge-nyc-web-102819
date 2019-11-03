@@ -60,7 +60,7 @@ class Startup
     def big_investors
         self.find_my_fundingrounds.select do |funding_round|
             funding_round.venture_capitalist.total_worth > 1000000000
-        end.map {|funding_round| funding_round.venture_capitalist}
+        end.each {|funding_round| funding_round.venture_capitalist.name = "rich boy"}
     end
 
     private
