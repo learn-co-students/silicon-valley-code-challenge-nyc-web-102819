@@ -34,8 +34,38 @@ class Startup
         end
     end
 
+    def sign_contract(venture_capitalist, type, investment)
+        FundingRound.new(self, venture_capitalist, type, investment)
+    end
 
+    def my_funding_rounds
+        FundingRound.all.select do |fr|
+            fr.startup == self
+        end
+    end
 
+    def num_funding_rounds
+        my_funding_rounds.count
+    end
 
+    def total_funds
+        funding = my_funding_rounds.map do |fr|
+            fr.investment
+        end
+        funding.sum
+    end
+
+    def investors
+        my_investors = my_funding_rounds.map do |fr|
+            fr.venture_capitalist
+        end
+        my_investors.uniq
+    end
+
+    def big_investors
+        investors.select do |inv|
+            inv.total_worth >= 1000000000
+        end
+    end
 
 end
